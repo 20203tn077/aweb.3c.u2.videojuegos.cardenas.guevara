@@ -5,6 +5,7 @@ import mx.edu.utez.service.ConnectionMySQL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.InputStream;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,7 +20,7 @@ public class DaoGames {
     private ResultSet rs;
     final private Logger CONSOLE = LoggerFactory.getLogger(DaoGames.class);
 
-    public boolean create(BeanGames beanGames){
+    public boolean create(BeanGames beanGames, InputStream image){
         boolean flag = false;
         try {
             con = ConnectionMySQL.getConnection();
@@ -58,12 +59,12 @@ public class DaoGames {
         return flag;
     }
 
-    public boolean delete(BeanGames beanGames){
+    public boolean delete(int id){
         boolean flag = false;
         try {
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_delete(?)}");
-            cstm.setInt(1, beanGames.getIdGames());
+            cstm.setInt(1, id);
             flag = cstm.execute();
         } catch (SQLException e) {
             System.out.println("DaoGames error: "+e.getMessage());
@@ -78,7 +79,7 @@ public class DaoGames {
         try {
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_findGames}");
-            cstm.execute();
+            rs = cstm.executeQuery();
 
             while (rs.next()) {
                 BeanCategory beanCategory = new BeanCategory();

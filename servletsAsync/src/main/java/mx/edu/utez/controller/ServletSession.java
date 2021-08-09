@@ -33,7 +33,7 @@ public class ServletSession extends HttpServlet {
 
         if(res) {
             session.setAttribute("session", beanUser);
-            request.getRequestDispatcher("/views/inicio.jsp").forward(request,response);
+            request.getRequestDispatcher("/views/game/games.jsp").forward(request,response);
         } else {
             request.getRequestDispatcher("/").forward(request,response);
         }
