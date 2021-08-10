@@ -26,7 +26,7 @@ public class DaoGames {
             con = ConnectionMySQL.getConnection();
             cstm = con.prepareCall("{call sp_create(?,?,?,?)}");
             cstm.setString(1, beanGames.getName());
-            //img cstm.set(2, beanGames);
+            cstm.setBlob(2, image);
             cstm.setString(3, beanGames.getDate_premiere());
             cstm.setInt(4, beanGames.getCategory_idCategory().getIdCategory());
 

@@ -1,5 +1,6 @@
 package mx.edu.utez.controller;
 
+import mx.edu.utez.model.category.DaoCategory;
 import mx.edu.utez.model.user.BeanUser;
 import mx.edu.utez.model.user.DaoUser;
 
@@ -33,6 +34,7 @@ public class ServletSession extends HttpServlet {
 
         if(res) {
             session.setAttribute("session", beanUser);
+            request.setAttribute("categoryList", new DaoCategory().findAllCategories());
             request.getRequestDispatcher("/views/game/games.jsp").forward(request,response);
         } else {
             request.getRequestDispatcher("/").forward(request,response);

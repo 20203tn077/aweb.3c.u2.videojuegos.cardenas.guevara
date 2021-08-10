@@ -34,7 +34,7 @@ public class ServletGame extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-
+        System.out.println("post");
         BeanGames beanGames = new BeanGames();
         BeanCategory beanCategory = new BeanCategory();
         DaoGames daoGames = new DaoGames();
@@ -43,10 +43,12 @@ public class ServletGame extends HttpServlet {
             case "create":
                 Part part = request.getPart("image");
                 InputStream image = part.getInputStream();
-                beanCategory.setIdCategory(Integer.parseInt(request.getParameter("idCategory")));
+                System.out.println("imagen lista");
+                beanCategory.setIdCategory(Integer.parseInt(request.getParameter("category")));
                 beanGames.setName(request.getParameter("name"));
                 beanGames.setDate_premiere(request.getParameter("date"));
                 beanGames.setCategory_idCategory(beanCategory);
+                System.out.println("parámetros listos");
                 boolean flag = daoGames.create(beanGames, image);
 
                 if (flag) {
@@ -54,6 +56,7 @@ public class ServletGame extends HttpServlet {
                 } else {
                     map.put("message", "No se registró correctamente");
                 }
+                write(response, map);
                 break;
             case "update":
                 beanCategory.setIdCategory(Integer.parseInt(request.getParameter("idCategory")));
